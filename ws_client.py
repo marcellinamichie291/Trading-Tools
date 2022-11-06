@@ -22,10 +22,10 @@ class WSClient:
     4. It sends incoming messages to the message_processor module
     """
     
-    def __init__(self, feed, gamma_hedger, api_key, api_secret):
+    def __init__(self, feed, delta_hedger, api_key, api_secret):
         
         self.feed = feed
-        self.gamma_hedger = gamma_hedger
+        self.delta_hedger = delta_hedger
         self.logger = logging.getLogger("deribit")
         self.api_key = api_key
         self.api_secret = api_secret
@@ -139,7 +139,7 @@ class WSClient:
     
     def shutdown(self):
         self.do_not_reconnect = True
-        self.gamma_hedger.stop_hedger = True
+        self.delta_hedger.stop_hedger = True
         self.logger.info("KeyboardInterrupt. Disabling reconnection attempts.")
         self.close_ws()
     
@@ -160,10 +160,7 @@ class WSClient:
         self.private_subscription_count = 0
         
     
-    def send_to_ws(self, data, call_type):
-        if call_type == "private/buy":
-            print("message got here")
-        
+    def send_to_ws(self, data, call_type):        
         call_id = self.api_call_id_counter
         message_to_send = {"jsonrpc" : "2.0", 
                            "id" : call_id, 
@@ -368,12 +365,12 @@ class WSClient:
                                 
                             elif reply["params"]["channel"] == "user.portfolio.btc":
                                 self.feed.manage_portfolio(reply["params"]["data"])
-                                self.gamma_hedger.check_deltas(self.send_to_ws)
+                                self.delta_hedger.check_deltas(self.send_to_ws)
                                 
                                 
                             elif reply["params"]["channel"] == "user.trades.any.any.raw":
                                 self.feed.update_positions(reply["params"]["data"])
-                                self.gamma_hedger.check_deltas(self.send_to_ws)
+                                self.delta_hedger.check_deltas(self.send_to_ws)
                                 
                                 
                             # if "timestamp" in reply["params"]["data"]:
