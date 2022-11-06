@@ -121,7 +121,7 @@ class DeltaHedge:
         self.logger.info("Rehedging. {} {} at market.".format(side, abs(diff)))
         
         message = {"instrument_name":"BTC-PERPETUAL", "amount":abs(diff), 
-                   "type":"limit", "label":"gamma_hedge", "price":price}
+                   "type":"limit", "label":"delta_hedge", "price":price}
         self.send_to_ws(message, call_type)
         
         
