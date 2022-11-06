@@ -7,13 +7,13 @@ import numpy as np
 import logging
 import time
 
-class GammaHedge:
+class DeltaHedge:
     
     def __init__(self, feed):
         
         self.feed = feed
         self.logger = logging.getLogger("deribit")
-        self.gamma_hedging_activated = False
+        self.delta_hedging_activated = False
         self.stop_hedger = False
         self.hedging_thread = threading.Thread(target=lambda: self.wait_for_input())
         self.hedging_thread.start()
@@ -31,7 +31,7 @@ class GammaHedge:
         self.send_to_ws = send_method
         current_options_delta, current_perp_delta = self.determine_option_delta()
         
-        if not self.gamma_hedging_activated:
+        if not self.delta_hedging_activated:
             pass
         
         else:
@@ -131,19 +131,19 @@ class GammaHedge:
             
             if not self.stop_hedger:
                 time.sleep(0.5)
-                if not self.gamma_hedging_activated:
-                    x = input("Activate dynamic Gamma-Hedging? (y/n)\n")
+                if not self.delta_hedging_activated:
+                    x = input("Activate dynamic Delta-Hedging? (y/n)\n")
                     if x == "y":
-                        self.gamma_hedging_activated = True
-                        self.logger.info("Dynamic gamma-hedging activated: "
-                                         "{}".format(self.gamma_hedging_activated))
+                        self.delta_hedging_activated = True
+                        self.logger.info("Dynamic delta-hedging activated: "
+                                         "{}".format(self.delta_hedging_activated))
                         self.check_deltas(self.send_to_ws)            
                 else:
-                    x = input("Deactivate dynamic Gamma-Hedging? (y/n)\n")
+                    x = input("Deactivate dynamic Delta-Hedging? (y/n)\n")
                     if x == "y":
-                        self.gamma_hedging_activated = False
-                        self.logger.info("Dynamic gamma-hedging activated: "
-                                         "{}".format(self.gamma_hedging_activated))
+                        self.delta_hedging_activated = False
+                        self.logger.info("Dynamic delta-hedging activated: "
+                                         "{}".format(self.delta_hedging_activated))
                         
             else:
                 break
