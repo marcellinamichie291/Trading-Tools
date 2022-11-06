@@ -9,7 +9,7 @@ import logging
 from ws_client import WSClient
 from save_top_of_book import SaveBBO
 from data_feed import DataFeed
-from hedger import GammaHedge
+from hedger import DeltaHedge
 import configparser
 
 
@@ -56,9 +56,9 @@ class Bot:
         
         self.feed = DataFeed()
         
-        self.gamma_hedger = GammaHedge(self.feed)
+        self.delta_hedger = DeltaHedge(self.feed)
         
-        self.client = WSClient(self.feed, self.gamma_hedger, 
+        self.client = WSClient(self.feed, self.delta_hedger, 
                                self.api_key, self.api_secret)
         
         self.save_bbo = SaveBBO(self.feed, db_connection)
