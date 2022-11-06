@@ -1,5 +1,5 @@
 # Trading-Tools
-It turns out finding a profitable trading strategy in a market with close to zero barriers to entry is pretty hard. Therefore, I've turned to develop some custom tools to improve and automate trade execution, and plan to work my way up from there. 
+It turns out finding a profitable automated trading strategy in a market with close to zero barriers to entry is pretty hard. Therefore, I've turned to develop some custom tools to improve and automate trade execution, and plan to work my way up from there. 
 
 This project aims to be the groundwork for an (semi-)automated trading system specific to Deribit Exchange (deribit.com). It is designed to allow for a variety of additional modules to be implemented on top of and integrated into this infrastructure, e.g. automated delta1 or options trading. Secondly, the project serves as a means for myself to enhance my programming skills, and learn a bit about fast live data processing. It is work in progress, there are lots of improvements to be implemented, particularly in terms of error handling and code documentation..
 
