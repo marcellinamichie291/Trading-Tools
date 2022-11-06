@@ -6,7 +6,7 @@ This project aims to be the groundwork for an (semi-)automated trading system sp
 So far, it establishes a connection to the Deribit API and streams loads of data, which is then processed. 
 It streams all options contracts order book information, some BTC-Perpetual Futures market data and user account data if API credentials are provided. 
 Every minute, it takes a snapshot of all options contracts best bid and best offer, and stores these to a local PostgreSQL database. Additionally, it uses this data to create a linearly interpolated volatility surface for specific log moneyness and maturity values. This leads to comparable volatility estimates over time, albeit at debatable accuracy due to the simplistic method of linear interpolation (to be improved..).
-The tool can furthermore gamma-hedge any options position in the users account dynamically via the Perpetual Futures contract, to be switched on and off with user CLI inputs.
+The tool can furthermore delta-hedge any options position in the users account dynamically via the Perpetual Futures contract, to be switched on and off with user CLI inputs.
 
 Future additions (work in progress) are:
 - full trading support for futures and options via CLI inputs
